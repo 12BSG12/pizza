@@ -155,5 +155,18 @@
       "category": 5,
       "rating": 7
     }
+  ],
+  "categories": [
+    { "id": 0, "catName": "Все" },
+    { "id": 1, "catName": "Мясные" },
+    { "id": 2, "catName": "Вегетарианская" },
+    { "id": 3, "catName": "Гриль" },
+    { "id": 4, "catName": "Острые" },
+    { "id": 5, "catName": "Закрытые" }
+  ],
+  "sort": [
+    { "id": 1, "sortName": "популярности" },
+    { "id": 2, "sortName": "цене" },
+    { "id": 3, "sortName": "алфавиту" }
   ]
 }
