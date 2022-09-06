@@ -7,7 +7,7 @@ const initialState: categoriesType = {
 }
 
 const categoriesReducer = createSlice({
-  name: 'header',
+  name: 'categories',
   initialState,
   reducers: {
     setIdAndTitle(state, action: PayloadAction<categoriesType>) {

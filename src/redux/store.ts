@@ -2,11 +2,13 @@ import {combineReducers, configureStore} from '@reduxjs/toolkit'
 import { pizzaAPI } from './reducers/pizzaAPI';
 import headerReducer from './reducers/header';
 import categoriesReducer from './reducers/categories';
+import sortReducer from './reducers/sort';
 
 const rootReducer = combineReducers({
   [pizzaAPI.reducerPath]: pizzaAPI.reducer,
   header: headerReducer,
   categories: categoriesReducer,
+  sort: sortReducer,
 })
 
 export const store = configureStore({

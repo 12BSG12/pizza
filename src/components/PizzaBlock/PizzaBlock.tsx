@@ -1,8 +1,8 @@
 import { FC, useState } from 'react';
-import { useAppDispatch } from '../hooks/hooks';
-import { IPizza, ISize, IType } from '../models/pizzaAPIType';
-import { setAllCount } from '../redux/reducers/header';
-import '../scss/app.scss';
+import { useAppDispatch } from '../../hooks/hooks';
+import { IPizza, ISize, IType } from '../../models/pizzaAPIType';
+import { setAllCount } from '../../redux/reducers/header';
+import '../../scss/app.scss';
 
 export const PizzaBlock: FC<IPizza> = ({ imageUrl, title, types, sizes, price, category }) => {
   const dispatch = useAppDispatch();

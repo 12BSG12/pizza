@@ -6,8 +6,8 @@ const initialState: headerType = {
   allSum: 0
 }
 
-const categoriesReducer = createSlice({
-  name: 'categories',
+const headerReducer = createSlice({
+  name: 'header',
   initialState,
   reducers: {
     setAllCount(state, action: PayloadAction<{allSum: number}>) {
@@ -18,5 +18,5 @@ const categoriesReducer = createSlice({
   }
 })
 
-export const { setAllCount } = categoriesReducer.actions
-export default categoriesReducer.reducer
+export const { setAllCount } = headerReducer.actions
+export default headerReducer.reducer

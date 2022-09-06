@@ -1,30 +1,23 @@
-import { FC, useState } from 'react';
+import { useState } from 'react';
+import { useAppDispatch } from '../../hooks/hooks';
 import { ISort } from '../../models/pizzaAPIType';
 import { useGetSortQuery } from '../../redux';
+import { setSortTag } from '../../redux/reducers/sort';
 import '../../scss/app.scss';
-import { SortTypeProps } from './ISort';
 
-export const Sort: FC<SortTypeProps> = ({setSortTag}) => {
+export const Sort = () => {
   const { data = [], isLoading } = useGetSortQuery('');
-  
+  const dispatch = useAppDispatch()
   const [activeItem, setActiveItem] = useState<ISort>({
     id: 1,
-    sortName: 'популярности',
+    sortName: 'популярности (убыв.)',
   });
 
   const [isActivePopup, setIsActivePopup] = useState<boolean>(false);
 
   const handlerOnClick = (item: ISort) => {
     setActiveItem({ id: item.id, sortName: item.sortName })
-    let sortTag: 'price' | 'category' | 'title'
-    if(item.sortName === 'популярности'){
-      sortTag = 'category'
-    } else if(item.sortName === 'цене'){
-      sortTag = 'price'
-    } else {
-      sortTag = 'title'
-    }
-    setSortTag(sortTag)
+    dispatch(setSortTag({sortName: item.sortName}))
   }
 
   return (

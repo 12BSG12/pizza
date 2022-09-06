@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { useAppDispatch } from '../hooks/hooks';
-import { ICategories } from '../models/pizzaAPIType';
-import { useGetCategoriesQuery } from '../redux';
-import { setIdAndTitle } from '../redux/reducers/categories';
-import '../scss/app.scss';
+import { useAppDispatch } from '../../hooks/hooks';
+import { ICategories } from '../../models/pizzaAPIType';
+import { useGetCategoriesQuery } from '../../redux';
+import { setIdAndTitle } from '../../redux/reducers/categories';
+import '../../scss/app.scss';
 
 export const Categories = () => {
   const dispatch = useAppDispatch();
