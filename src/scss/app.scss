@@ -156,6 +156,21 @@ body {
             display: none;
           }
         }
+        &:disabled{
+          border-color: #787878;
+          opacity: .4;
+          svg {
+            path {
+              fill: #787878;
+            }
+          }
+          &:hover{
+            background-color: transparent;
+          }
+          &:active{
+            transform: none;
+          }
+        }
       }
 
       b {

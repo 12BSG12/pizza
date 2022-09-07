@@ -22,9 +22,13 @@ const headerReducer = createSlice({
     },
     setIsSwitched(state, action: PayloadAction<boolean>) {
       state.isSwitched = action.payload
+    },
+    clearAllCount(state) {
+      state.allCount = 0;
+      state.allSum = 0
     }
   }
 })
 
-export const { setAllCount, setSearchText, setIsSwitched } = headerReducer.actions
+export const { setAllCount, setSearchText, setIsSwitched, clearAllCount} = headerReducer.actions
 export default headerReducer.reducer

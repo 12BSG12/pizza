@@ -1,12 +1,12 @@
 import { FC, useState } from 'react';
 import { useAppDispatch } from '../../hooks/hooks';
 import { IPizza, ISize, IType } from '../../models/pizzaAPIType';
+import { setCartData } from '../../redux/reducers/cart';
 import { setAllCount } from '../../redux/reducers/header';
 import '../../scss/app.scss';
 
-export const PizzaBlock: FC<IPizza> = ({ imageUrl, title, types, sizes, price, category }) => {
+export const PizzaBlock: FC<IPizza> = ({ id, imageUrl, title, types, sizes, price, category }) => {
   const dispatch = useAppDispatch();
-
   const [countPizza, setCountPizza] = useState<number>(0);
 
   const [activePizzaCat, setActivePizzaCat] = useState<IType>({
@@ -22,6 +22,17 @@ export const PizzaBlock: FC<IPizza> = ({ imageUrl, title, types, sizes, price, c
   const handleOnClick = () => {
     setCountPizza(countPizza + 1);
     dispatch(setAllCount({ allSum: price }));
+    dispatch(
+      setCartData({
+        id,
+        title,
+        imageUrl,
+        types: activePizzaCat.name,
+        sizes: activePizzaSize.size,
+        price,
+        countPizza: countPizza + 1,
+      }),
+    );
   };
   return (
     <div className="pizza-block">

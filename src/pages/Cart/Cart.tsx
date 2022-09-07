@@ -1,12 +1,20 @@
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import { setIsSwitched } from '../../redux/reducers/header';
+import { clearCartData } from '../../redux/reducers/cart';
+import { clearAllCount, setIsSwitched } from '../../redux/reducers/header';
 import '../../scss/app.scss';
 import { CartItem } from './CartItem';
 
 export const Cart = () => {
   const dispatch = useAppDispatch();
   const { allCount, allSum } = useAppSelector((state) => state.header);
+  const { cartData } = useAppSelector((state) => state.cart);
+  const clearOnClick = () => {
+    dispatch(clearCartData())
+    dispatch(clearAllCount())
+  }
+  console.log(cartData);
+  
   return (
     <div className="container container--cart">
       <div className="cart">
@@ -42,7 +50,7 @@ export const Cart = () => {
             </svg>
             Корзина
           </h2>
-          <div className="cart__clear">
+          <div className="cart__clear" onClick={clearOnClick}>
             <svg
               width="20"
               height="20"
@@ -82,8 +90,8 @@ export const Cart = () => {
           </div>
         </div>
         <div className="content__items">
-          {[1, 2, 3, 4, 5].map((item) => (
-            <CartItem key={item}/>
+          {cartData.map((item, index) => (
+            <CartItem key={index} {...item}/>
           ))}
         </div>
         <div className="cart__bottom">
