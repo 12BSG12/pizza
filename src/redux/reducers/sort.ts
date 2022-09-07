@@ -2,7 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { sortType } from '../../models/sortType'
 
 const initialState: sortType = {
-  sortTag: 'category'
+  sortTag: 'category',
+  sortName: 'популярности (убыв.)'
 }
 
 const sortReducer = createSlice({
@@ -11,6 +12,7 @@ const sortReducer = createSlice({
   reducers: {
     setSortTag (state, action: PayloadAction<{sortName: string}>) {
       const {sortName} = action.payload
+      state.sortName = sortName
       if(sortName.includes('популярности')){
         state.sortTag = 'category'
       } else if(sortName.includes('цене')){

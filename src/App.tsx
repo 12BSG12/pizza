@@ -8,8 +8,8 @@ import './scss/app.scss';
 
 export const App = () => {
   const { catID, title } = useAppSelector((state) => state.categories);
-  const { sortTag } = useAppSelector((state) => state.sort);
-  const { data = [], isLoading, isFetching } = useGetPizzaQuery({ catID, sortTag });
+  const { sortTag, sortName } = useAppSelector((state) => state.sort);
+  const { data = [], isLoading, isFetching } = useGetPizzaQuery({sortName, catID, sortTag });
 
   return (
     <div className="wrapper">
