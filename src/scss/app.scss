@@ -24,9 +24,10 @@ body {
   }
 
   &__items {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    grid-column-gap: 11px;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    grid-template-rows: repeat(1,1fr);
   }
 
   &__top {
@@ -308,4 +309,7 @@ body {
       font-size: 18px;
     }
   }
+}
+.cart .content__items {
+  display: block;
 }

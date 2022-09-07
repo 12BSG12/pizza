@@ -3,7 +3,9 @@ import { headerType } from '../../models/headerType'
 
 const initialState: headerType = {
   allCount: 0,
-  allSum: 0
+  allSum: 0,
+  searchText: '',
+  isSwitched: true
 }
 
 const headerReducer = createSlice({
@@ -14,9 +16,15 @@ const headerReducer = createSlice({
       const {allSum} = action.payload
       state.allCount += 1;
       state.allSum += allSum
+    },
+    setSearchText(state, action: PayloadAction<string>) {
+      state.searchText = action.payload
+    },
+    setIsSwitched(state, action: PayloadAction<boolean>) {
+      state.isSwitched = action.payload
     }
   }
 })
 
-export const { setAllCount } = headerReducer.actions
+export const { setAllCount, setSearchText, setIsSwitched } = headerReducer.actions
 export default headerReducer.reducer

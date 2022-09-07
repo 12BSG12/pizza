@@ -29,4 +29,23 @@
       color: #7b7b7b;
     }
   }
+  &__search {
+    position: relative;
+    left: -120px;
+    svg {
+      height: 22px;
+      left: 14px;
+      opacity: .3;
+      position: absolute;
+      top: 12px;
+      width: 22px;
+    }
+    input {
+      border: 1px solid rgba(0,0,0,.1);
+      border-radius: 10px;
+      font-size: 16px;
+      padding: 12px 20px 12px 42px;
+      width: 400px;
+    }
+  }
 }

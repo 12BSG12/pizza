@@ -1,36 +1,19 @@
-import { Categories } from './components/Categories/Categories';
+import { Home } from './pages/Home';
 import { Header } from './components/Header/Header';
-import { PizzaBlock } from './components/PizzaBlock/PizzaBlock';
-import { Sort } from './components/Sort/Sort';
-import { useAppSelector } from './hooks/hooks';
-import { useGetPizzaQuery } from './redux';
 import './scss/app.scss';
+import { Cart } from './pages/Cart/Cart';
+import { Route, Routes } from 'react-router-dom';
 
 export const App = () => {
-  const { catID, title } = useAppSelector((state) => state.categories);
-  const { sortTag, sortName } = useAppSelector((state) => state.sort);
-  const { data = [], isLoading, isFetching } = useGetPizzaQuery({sortName, catID, sortTag });
-
   return (
     <div className="wrapper">
       <Header />
       <div className="content">
-        <div className="container">
-          <div className="content__top">
-            <Categories />
-            <Sort />
-          </div>
-          <h2 className="content__title">{title} пиццы</h2>
-          {isLoading || isFetching ? (
-            <div>Loading...</div>
-          ) : (
-            <div className="content__items">
-              {data.map((item) => (
-                <PizzaBlock {...item} key={item.id} />
-              ))}
-            </div>
-          )}
-        </div>
+        <Routes>
+          <Route path="/" element={<Home />}/>
+          <Route path="/cart" element={<Cart />} />
+          <Route path="*" element={<div>404 NOT FOUND</div>} />
+        </Routes>
       </div>
     </div>
   );
