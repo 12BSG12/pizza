@@ -7,7 +7,8 @@ import { Link } from 'react-router-dom';
 
 export const Header = () => {
   const dispatch = useAppDispatch()
-  const {allCount, allSum, searchText, isSwitched} = useAppSelector(state => state.header)
+  const {searchText, isSwitched} = useAppSelector(state => state.header)
+  const {allCount, allSum} = useAppSelector(state => state.cart)
   const [search, setSearch] = useState(searchText)
   const handlerOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value)

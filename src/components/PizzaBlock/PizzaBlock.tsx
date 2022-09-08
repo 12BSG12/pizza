@@ -2,7 +2,6 @@ import { FC, useState } from 'react';
 import { useAppDispatch } from '../../hooks/hooks';
 import { IPizza, ISize, IType } from '../../models/pizzaAPIType';
 import { setCartData } from '../../redux/reducers/cart';
-import { setAllCount } from '../../redux/reducers/header';
 import '../../scss/app.scss';
 
 export const PizzaBlock: FC<IPizza> = ({ id, imageUrl, title, types, sizes, price, category }) => {
@@ -21,7 +20,6 @@ export const PizzaBlock: FC<IPizza> = ({ id, imageUrl, title, types, sizes, pric
 
   const handleOnClick = () => {
     setCountPizza(countPizza + 1);
-    dispatch(setAllCount({ allSum: price }));
     dispatch(
       setCartData({
         id,

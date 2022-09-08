@@ -3,6 +3,8 @@ import { cartDataType, cartType } from '../../models/cartType';
 
 const initialState: cartType = {
   cartData: [],
+  allSum: 0,
+  allCount: 0,
 };
 
 const cartReducer = createSlice({
@@ -20,13 +22,26 @@ const cartReducer = createSlice({
         price: price * countPizza,
         countPizza,
       });
-      //state.cartData = state.cartData.filter((item, index, arr) => arr.findIndex(item => item.id) === index)
+      //баг, нужен фикс
+      state.cartData = state.cartData.sort((a, b) => b.price - a.price).filter(
+        (item, index, arr) => arr.findIndex((_item) => _item.id === item.id) === index,
+      );
+      state.allCount += 1;
+      state.allSum += price;
     },
     clearCartData(state) {
       state.cartData.length = 0;
+      state.allCount = 0;
+      state.allSum = 0;
     },
-    removeCartDataByID(state, action: PayloadAction<number>) {
-      state.cartData = state.cartData.filter((item) => item.id !== action.payload);
+    removeCartDataByID(
+      state,
+      action: PayloadAction<{ id: number; price: number; countPizza: number }>,
+    ) {
+      const { id, price, countPizza } = action.payload;
+      state.cartData = state.cartData.filter((item) => item.id !== id);
+      state.allCount -= countPizza;
+      state.allSum -= price;
     },
   },
 });

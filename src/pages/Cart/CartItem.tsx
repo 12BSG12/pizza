@@ -59,7 +59,7 @@ export const CartItem:FC<cartDataType> = ({id, title, imageUrl, types, sizes, pr
       <div className="cart__item-price">
         <b>{price} ₽</b>
       </div>
-      <div className="cart__item-remove" onClick={() => dispatch(removeCartDataByID(id))}>
+      <div className="cart__item-remove" onClick={() => dispatch(removeCartDataByID({id, price, countPizza}))}>
         <div className="button button--outline button--circle">
           <svg
             width="10"
