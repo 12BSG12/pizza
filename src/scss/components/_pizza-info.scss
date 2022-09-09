@@ -1,0 +1,14 @@
+.pizza-info{
+  display: flex;
+  justify-content: space-between;
+  &__left{
+    h2{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  }
+  &__right{
+    text-align:justify;
+    font-size: 22px;
+  }
+}

@@ -3,6 +3,7 @@ import { useAppDispatch } from '../../hooks/hooks';
 import { ICategories } from '../../models/pizzaAPIType';
 import { useGetCategoriesQuery } from '../../redux';
 import { setIdAndTitle } from '../../redux/reducers/categories';
+import { setPage } from '../../redux/reducers/pagination';
 import '../../scss/app.scss';
 
 export const Categories = () => {
@@ -15,6 +16,7 @@ export const Categories = () => {
   const handleOnClick = (item: ICategories) => {
     setActiveItem(item.id);
     dispatch(setIdAndTitle({ catID: item.id, title: item.catName }));
+    dispatch(setPage(1))
   };
 
   return (

@@ -1,7 +1,9 @@
 import { FC, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks/hooks';
 import { IPizza, ISize, IType } from '../../models/pizzaAPIType';
 import { setCartData } from '../../redux/reducers/cart';
+import { setPizzaInfo } from '../../redux/reducers/pizzaInfo';
 import '../../scss/app.scss';
 
 export const PizzaBlock: FC<IPizza> = ({ id, imageUrl, title, types, sizes, price, category }) => {
@@ -34,8 +36,10 @@ export const PizzaBlock: FC<IPizza> = ({ id, imageUrl, title, types, sizes, pric
   };
   return (
     <div className="pizza-block">
-      <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
-      <h4 className="pizza-block__title">{title}</h4>
+      <Link to={'/pizza_info/' + id} onClick={() => dispatch(setPizzaInfo({title, imageUrl, price}))}>
+        <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+        <h4 className="pizza-block__title">{title}</h4>
+      </Link>
       <div className="pizza-block__selector">
         <ul>
           {types.map((item) => (

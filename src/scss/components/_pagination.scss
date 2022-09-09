@@ -1,0 +1,22 @@
+.pagination{
+  border: 1px solid #fe5f1e;
+  border-radius: 30px;
+  color: #fe5f1e;
+}
+.MuiButtonBase-root {
+  button {
+    border: 1px solid #fe5f1e;
+    color: #fe5f1e;
+    &:hover{
+      background-color: #fe5f1e;
+      color: #fff;
+    }
+ }
+}
+.MuiButtonBase-root.MuiPaginationItem-root.Mui-selected {
+  background-color: #fe5f1e;
+  color: #fff;
+  &:hover{
+    background-color: #fe5f1e;
+  }
+}
