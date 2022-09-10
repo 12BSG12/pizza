@@ -1,8 +1,16 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { ICategories, IPizza, ISort, pizzaApiType, pizzaArgType } from '../../models/pizzaAPIType';
+import {
+  ICategories,
+  IPizza,
+  ISort,
+  pizzaApiType,
+  pizzaArgType,
+  pizzaInfoType,
+} from '../../models/pizzaAPIType';
 
 export const pizzaAPI = createApi({
   reducerPath: 'pizzaAPI',
+  tagTypes: ['pizzaInfo'],
   baseQuery: fetchBaseQuery({
     baseUrl: 'http://localhost:3001/',
   }),
@@ -46,7 +54,35 @@ export const pizzaAPI = createApi({
         url: `sort`,
       }),
     }),
+    getPizzaInfo: builder.query<pizzaInfoType[], string>({
+      query: () => ({
+        url: `info`,
+      }),
+      providesTags: ['pizzaInfo'],
+    }),
+    setPizzaInfo: builder.mutation<pizzaInfoType, pizzaInfoType>({
+      query: (body) => ({
+        url: `info`,
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['pizzaInfo'],
+    }),
+    delPizzaInfo: builder.mutation<pizzaInfoType, number>({
+      query: (id) => ({
+        url: `info/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['pizzaInfo'],
+    }),
   }),
 });
 
-export const { useGetPizzaQuery, useGetCategoriesQuery, useGetSortQuery } = pizzaAPI;
+export const {
+  useGetPizzaQuery,
+  useGetCategoriesQuery,
+  useGetSortQuery,
+  useGetPizzaInfoQuery,
+  useSetPizzaInfoMutation,
+  useDelPizzaInfoMutation,
+} = pizzaAPI;

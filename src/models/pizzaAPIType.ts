@@ -41,3 +41,11 @@ export type pizzaArgType = {
   catID: number;
   sortTag: 'title' | 'price' | 'category';
 };
+
+export type pizzaInfoType = {
+  id: number
+  title: string | null;
+  imageUrl: string | null;
+  price: number;
+  info: string | null;
+}

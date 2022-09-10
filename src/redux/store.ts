@@ -4,7 +4,6 @@ import headerReducer from './reducers/header';
 import categoriesReducer from './reducers/categories';
 import sortReducer from './reducers/sort';
 import cartReducer from './reducers/cart';
-import pizzaInfoReducer from './reducers/pizzaInfo';
 import paginationReducer from './reducers/pagination';
 
 const rootReducer = combineReducers({
@@ -13,7 +12,6 @@ const rootReducer = combineReducers({
   categories: categoriesReducer,
   sort: sortReducer,
   cart: cartReducer,
-  pizzaInfo: pizzaInfoReducer,
   pagination: paginationReducer
 })
 

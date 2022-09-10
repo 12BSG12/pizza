@@ -2,12 +2,13 @@ import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks/hooks';
 import { IPizza, ISize, IType } from '../../models/pizzaAPIType';
+import { useSetPizzaInfoMutation } from '../../redux';
 import { setCartData } from '../../redux/reducers/cart';
-import { setPizzaInfo } from '../../redux/reducers/pizzaInfo';
 import '../../scss/app.scss';
 
 export const PizzaBlock: FC<IPizza> = ({ id, imageUrl, title, types, sizes, price, category }) => {
   const dispatch = useAppDispatch();
+  const [ setPizzaInfo] = useSetPizzaInfoMutation()
   const [countPizza, setCountPizza] = useState<number>(0);
 
   const [activePizzaCat, setActivePizzaCat] = useState<IType>({
@@ -34,9 +35,12 @@ export const PizzaBlock: FC<IPizza> = ({ id, imageUrl, title, types, sizes, pric
       }),
     );
   };
+  const handleSetPizzaInfo = async () => {
+    await setPizzaInfo({id, title, imageUrl, price, info: '123'}).unwrap()
+  }
   return (
     <div className="pizza-block">
-      <Link to={'/pizza_info/' + id} onClick={() => dispatch(setPizzaInfo({title, imageUrl, price}))}>
+      <Link to={'/pizza_info/' + id} onClick={handleSetPizzaInfo}>
         <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
         <h4 className="pizza-block__title">{title}</h4>
       </Link>

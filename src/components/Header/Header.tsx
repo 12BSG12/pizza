@@ -7,6 +7,9 @@ import { Link } from 'react-router-dom';
 
 export const Header = () => {
   const dispatch = useAppDispatch()
+  // const [delPizzaInfo] = useDelPizzaInfoMutation()
+
+
   const {searchText, isSwitched} = useAppSelector(state => state.header)
   const {allCount, allSum} = useAppSelector(state => state.cart)
   const [search, setSearch] = useState(searchText)
@@ -14,6 +17,11 @@ export const Header = () => {
     setSearch(e.target.value)
     dispatch(setSearchText(e.target.value))
   }
+
+  // const handleDelPizzaInfo = async (id: number) => {
+  //   await delPizzaInfo(id).unwrap();
+  // }
+
   return (
     <div className="header">
       <div className="container">
