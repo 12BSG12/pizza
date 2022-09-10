@@ -27,3 +27,17 @@ export interface ISort {
   id: number;
   sortName: string;
 }
+
+export type pizzaApiType = {
+  data: IPizza[];
+  totalCount: number;
+};
+
+export type pizzaArgType = {
+  page: number;
+  limit: number;
+  search?: string;
+  sortName: string;
+  catID: number;
+  sortTag: 'title' | 'price' | 'category';
+};
