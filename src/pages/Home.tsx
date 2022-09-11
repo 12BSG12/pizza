@@ -2,20 +2,28 @@ import '../scss/app.scss';
 import { Categories } from '../components/Categories/Categories';
 import { PizzaBlock } from '../components/PizzaBlock/PizzaBlock';
 import { Sort } from '../components/Sort/Sort';
-import { useAppDispatch, useAppSelector } from '../hooks/hooks';
+import { useAppSelector } from '../hooks/hooks';
 import { useGetPizzaQuery } from '../redux';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
-import { setPage } from '../redux/reducers/pagination';
+import { useSearchParams } from 'react-router-dom';
 
 export const Home = () => {
-  const dispatch = useAppDispatch();
   const { catID, title } = useAppSelector((state) => state.categories);
-  const { sortTag, sortName } = useAppSelector((state) => state.sort);
-  const { page } = useAppSelector((state) => state.pagination);
   const { searchText } = useAppSelector((state) => state.header);
+  const { sortTag, sortName } = useAppSelector((state) => state.sort);
+  const [pageParams, setPageParams] = useSearchParams();
+  const pizzaPageQuery = pageParams.get('page') || '1';
+
+  const handleOnChangePage = (e: React.ChangeEvent<unknown>, value: number) => {
+    let page = {};
+    if (value) page = { page: value };
+    else page = '';
+    setPageParams(page);
+  };
+
   const { data, isLoading, isFetching } = useGetPizzaQuery({
-    page: page,
+    page: Number(pizzaPageQuery),
     limit: catID === 0 ? 4 : 0,
     sortName,
     catID,
@@ -43,8 +51,8 @@ export const Home = () => {
         <Pagination
           className="MuiButtonBase-root"
           count={Math.ceil(data?.totalCount !== undefined && catID === 0 ? data.totalCount / 4 : 1)}
-          page={page}
-          onChange={(_, num) => dispatch(setPage(num))}
+          page={Number(pizzaPageQuery)}
+          onChange={handleOnChangePage}
         />
       </Stack>
     </div>

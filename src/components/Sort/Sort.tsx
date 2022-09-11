@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useAppDispatch } from '../../hooks/hooks';
 import { ISort } from '../../models/pizzaAPIType';
 import { useGetSortQuery } from '../../redux';
@@ -7,7 +7,7 @@ import '../../scss/app.scss';
 
 export const Sort = () => {
   const { data = [], isLoading } = useGetSortQuery('');
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
   const [activeItem, setActiveItem] = useState<ISort>({
     id: 1,
     sortName: 'популярности (убыв.)',
@@ -16,16 +16,26 @@ export const Sort = () => {
   const [isActivePopup, setIsActivePopup] = useState<boolean>(false);
 
   const handlerOnClick = (item: ISort) => {
-    setActiveItem({ id: item.id, sortName: item.sortName })
-    dispatch(setSortTag({sortName: item.sortName}))
-  }
+    setActiveItem({ id: item.id, sortName: item.sortName });
+    dispatch(setSortTag({ sortName: item.sortName }));
+  };
+
+  const rootEl = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if(isActivePopup){
+      const onClick = (e: any) => rootEl?.current?.contains(e.target) || setIsActivePopup(false);
+      document.addEventListener('click', onClick);
+      return () => document.removeEventListener('click', onClick);
+    }
+  }, [isActivePopup]);
 
   return (
     <>
       {isLoading ? (
         <div>Loading...</div>
       ) : (
-        <div className="sort">
+        <div className="sort" ref={rootEl}>
           <div className="sort__label">
             <svg
               className={isActivePopup ? 'active' : ''}

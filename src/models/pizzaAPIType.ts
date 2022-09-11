@@ -43,7 +43,6 @@ export type pizzaArgType = {
 };
 
 export type pizzaInfoType = {
-  id: number
   title: string | null;
   imageUrl: string | null;
   price: number;

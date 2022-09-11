@@ -8,7 +8,7 @@ import '../../scss/app.scss';
 
 export const PizzaBlock: FC<IPizza> = ({ id, imageUrl, title, types, sizes, price, category }) => {
   const dispatch = useAppDispatch();
-  const [ setPizzaInfo] = useSetPizzaInfoMutation()
+  const [setPizzaInfo] = useSetPizzaInfoMutation();
   const [countPizza, setCountPizza] = useState<number>(0);
 
   const [activePizzaCat, setActivePizzaCat] = useState<IType>({
@@ -36,8 +36,8 @@ export const PizzaBlock: FC<IPizza> = ({ id, imageUrl, title, types, sizes, pric
     );
   };
   const handleSetPizzaInfo = async () => {
-    await setPizzaInfo({id, title, imageUrl, price, info: '123'}).unwrap()
-  }
+    await setPizzaInfo({ title, imageUrl, price, info: '123' }).unwrap();
+  };
   return (
     <div className="pizza-block">
       <Link to={'/pizza_info/' + id} onClick={handleSetPizzaInfo}>

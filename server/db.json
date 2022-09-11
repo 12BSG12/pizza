@@ -345,5 +345,10 @@
       "sortName": "алфавиту (возр.)"
     }
   ],
-  "info": []
+  "info": {
+    "title": null,
+    "imageUrl": null,
+    "price": 0,
+    "info": null
+  }
 }

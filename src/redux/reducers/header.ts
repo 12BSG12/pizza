@@ -19,5 +19,5 @@ const headerReducer = createSlice({
   }
 })
 
-export const { setSearchText, setIsSwitched} = headerReducer.actions
+export const {setIsSwitched, setSearchText} = headerReducer.actions
 export default headerReducer.reducer

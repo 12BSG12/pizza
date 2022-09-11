@@ -54,7 +54,7 @@ export const pizzaAPI = createApi({
         url: `sort`,
       }),
     }),
-    getPizzaInfo: builder.query<pizzaInfoType[], string>({
+    getPizzaInfo: builder.query<pizzaInfoType, string>({
       query: () => ({
         url: `info`,
       }),

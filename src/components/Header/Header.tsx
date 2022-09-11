@@ -1,31 +1,26 @@
 import '../../scss/app.scss';
 import logo from '../../assets/img/pizza-logo.svg';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import { ChangeEvent, useState } from 'react';
 import { setIsSwitched, setSearchText } from '../../redux/reducers/header';
 import { Link } from 'react-router-dom';
+import { useSetPizzaInfoMutation } from '../../redux';
 
 export const Header = () => {
-  const dispatch = useAppDispatch()
-  // const [delPizzaInfo] = useDelPizzaInfoMutation()
+  const dispatch = useAppDispatch();
+  const [setPizzaInfo] = useSetPizzaInfoMutation();
 
+  const { searchText, isSwitched } = useAppSelector((state) => state.header);
+  const { allCount, allSum } = useAppSelector((state) => state.cart);
 
-  const {searchText, isSwitched} = useAppSelector(state => state.header)
-  const {allCount, allSum} = useAppSelector(state => state.cart)
-  const [search, setSearch] = useState(searchText)
-  const handlerOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value)
-    dispatch(setSearchText(e.target.value))
-  }
-
-  // const handleDelPizzaInfo = async (id: number) => {
-  //   await delPizzaInfo(id).unwrap();
-  // }
+  const handleDelPizzaInfo = async () => {
+    await setPizzaInfo({ title: null, imageUrl: null, price: 0, info: null }).unwrap();
+    dispatch(setIsSwitched(true));
+  };
 
   return (
     <div className="header">
       <div className="container">
-        <Link to='/' onClick={() => dispatch(setIsSwitched(true))}>
+        <Link to="/" onClick={handleDelPizzaInfo}>
           <div className="header__logo">
             <img width="38" src={logo} alt="Pizza logo" />
             <div>
@@ -34,18 +29,50 @@ export const Header = () => {
             </div>
           </div>
         </Link>
-        {
-          isSwitched &&
+        {isSwitched && (
           <>
             <div className="header__search">
-              <svg enableBackground="new 0 0 32 32" id="EditableLine" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="14" cy="14" fill="none" id="XMLID_42_" r="9" stroke="#000000" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2"></circle>
-                <line fill="none" id="XMLID_44_" stroke="#000000" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2" x1="27" x2="20.366" y1="27" y2="20.366"></line>
+              <svg
+                enableBackground="new 0 0 32 32"
+                id="EditableLine"
+                version="1.1"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg">
+                <circle
+                  cx="14"
+                  cy="14"
+                  fill="none"
+                  id="XMLID_42_"
+                  r="9"
+                  stroke="#000000"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeMiterlimit="10"
+                  strokeWidth="2"></circle>
+                <line
+                  fill="none"
+                  id="XMLID_44_"
+                  stroke="#000000"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeMiterlimit="10"
+                  strokeWidth="2"
+                  x1="27"
+                  x2="20.366"
+                  y1="27"
+                  y2="20.366"></line>
               </svg>
-              <input placeholder="Поиск пиццы..." value={search} onChange={handlerOnChange}/>
+              <input
+                placeholder="Поиск пиццы..."
+                value={searchText}
+                onChange={(e) => dispatch(setSearchText(e.target.value))}
+              />
             </div>
             <div className="header__cart">
-              <Link to="/cart" className="button button--cart" onClick={() => dispatch(setIsSwitched(false))}>
+              <Link
+                to="/cart"
+                className="button button--cart"
+                onClick={() => dispatch(setIsSwitched(false))}>
                 <span>{allSum} ₽</span>
                 <div className="button__delimiter"></div>
                 <svg
@@ -80,7 +107,7 @@ export const Header = () => {
               </Link>
             </div>
           </>
-        }
+        )}
       </div>
     </div>
   );

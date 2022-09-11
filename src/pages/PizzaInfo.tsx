@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom';
-import { useDelPizzaInfoMutation, useGetPizzaInfoQuery } from '../redux';
+import { useGetPizzaInfoQuery, useSetPizzaInfoMutation } from '../redux';
 import '../scss/app.scss';
 
 export const PizzaInfo = () => {
-  const {data = [], isLoading, isFetching } = useGetPizzaInfoQuery('');
-  const [delPizzaInfo] = useDelPizzaInfoMutation()
-  
-  const handleDelPizzaInfo = async (id: number) => {
-    await delPizzaInfo(id).unwrap();
-  }
+  const { data, isLoading, isFetching } = useGetPizzaInfoQuery('');
+  const [setPizzaInfo] = useSetPizzaInfoMutation();
+
+  const handleDelPizzaInfo = async () => {
+    await setPizzaInfo({ title: null, imageUrl: null, price: 0, info: null }).unwrap();
+  };
   return (
     <div className="container">
       {isLoading || isFetching ? (
@@ -16,17 +16,17 @@ export const PizzaInfo = () => {
       ) : (
         <div className="pizza-info">
           <div className="pizza-info__left">
-            <img src={data[0]?.imageUrl ?? ''} alt="Pizza" />
+            <img src={data?.imageUrl ?? ''} alt="Pizza" />
             <h2>
-              Пицца {data[0]?.title?.toLowerCase()} цена от {data[0]?.price} ₽
+              Пицца {data?.title?.toLowerCase()} цена от {data?.price} ₽
             </h2>
-            <Link to="/" onClick={() => handleDelPizzaInfo(data[0].id)}>
+            <Link to="/" onClick={handleDelPizzaInfo}>
               <button className="button button--outline button--add">
                 <span>Назад</span>
               </button>
             </Link>
           </div>
-          <div className="pizza-info__right">{data[0]?.info}</div>
+          <div className="pizza-info__right">{data?.info}</div>
         </div>
       )}
     </div>
