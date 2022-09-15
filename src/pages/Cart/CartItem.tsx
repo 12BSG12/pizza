@@ -1,11 +1,19 @@
 import { FC } from 'react';
 import { useAppDispatch } from '../../hooks/hooks';
 import { cartDataType } from '../../models/cartType';
-import { removeCartDataByID } from '../../redux/reducers/cart';
+import { useDelCartMutation } from '../../redux';
+import { removeCartCount } from '../../redux/reducers/cart';
 import '../../scss/app.scss';
 
 export const CartItem:FC<cartDataType> = ({id, title, imageUrl, types, sizes, price, countPizza}) => {
   const dispatch = useAppDispatch()
+  const [ delCart ] = useDelCartMutation()
+
+  const handleDelCart = async () => {
+    await delCart(id).unwrap();
+    dispatch(removeCartCount({countPizza, price}));
+  };
+
   return (
     <div className="cart__item">
       <div className="cart__item-img">
@@ -59,8 +67,8 @@ export const CartItem:FC<cartDataType> = ({id, title, imageUrl, types, sizes, pr
       <div className="cart__item-price">
         <b>{price} ₽</b>
       </div>
-      <div className="cart__item-remove" onClick={() => dispatch(removeCartDataByID({id, price, countPizza}))}>
-        <div className="button button--outline button--circle">
+      <div className="cart__item-remove">
+        <div className="button button--outline button--circle" onClick={handleDelCart}>
           <svg
             width="10"
             height="10"

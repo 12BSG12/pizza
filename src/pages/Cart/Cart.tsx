@@ -1,6 +1,8 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import { clearCartData } from '../../redux/reducers/cart';
+import { useDelCartMutation, useGetCartQuery } from '../../redux';
+import { clearAllCount } from '../../redux/reducers/cart';
 import { setIsSwitched } from '../../redux/reducers/header';
 import '../../scss/app.scss';
 import { CartEmpty } from './CartEmpty';
@@ -8,12 +10,14 @@ import { CartItem } from './CartItem';
 
 export const Cart = () => {
   const dispatch = useAppDispatch();
+  const { data = [] } = useGetCartQuery('');
+  const [delCart] = useDelCartMutation();
   const { allCount, allSum } = useAppSelector((state) => state.cart);
-  const { cartData } = useAppSelector((state) => state.cart);
-  const clearOnClick = () => {
-    dispatch(clearCartData());
+
+  const clearOnClick = async () => {
+    await Promise.all(data).then(data => data.forEach((item) => delCart(item.id)))
+    dispatch(clearAllCount());
   };
-  console.log(cartData);
 
   return (
     <div className="container container--cart">
@@ -91,7 +95,7 @@ export const Cart = () => {
             </div>
           </div>
           <div className="content__items">
-            {cartData.map((item, index) => (
+            {data.map((item, index) => (
               <CartItem key={index} {...item} />
             ))}
           </div>

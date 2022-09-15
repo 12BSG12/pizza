@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
+  cartDataType,
   ICategories,
   IPizza,
   ISort,
@@ -10,7 +11,7 @@ import {
 
 export const pizzaAPI = createApi({
   reducerPath: 'pizzaAPI',
-  tagTypes: ['pizzaInfo'],
+  tagTypes: ['pizzaInfo', 'Cart'],
   baseQuery: fetchBaseQuery({
     baseUrl: 'http://localhost:3001/',
   }),
@@ -68,12 +69,34 @@ export const pizzaAPI = createApi({
       }),
       invalidatesTags: ['pizzaInfo'],
     }),
-    delPizzaInfo: builder.mutation<pizzaInfoType, number>({
+    getCart: builder.query<cartDataType[], string>({
+      query: () => ({
+        url: `cart`,
+      }),
+      providesTags: ['Cart'],
+    }),
+    setCart: builder.mutation<cartDataType, cartDataType>({
+      query: (body) => ({
+        url: `cart`,
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Cart'],
+    }),
+    updateCart: builder.mutation<cartDataType, cartDataType>({
+      query: (body) => ({
+        url: `cart/${body.id}`,
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: ['Cart'],
+    }),
+    delCart: builder.mutation<cartDataType, number>({
       query: (id) => ({
-        url: `info/${id}`,
+        url: `cart/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['pizzaInfo'],
+      invalidatesTags: ['Cart'],
     }),
   }),
 });
@@ -84,5 +107,8 @@ export const {
   useGetSortQuery,
   useGetPizzaInfoQuery,
   useSetPizzaInfoMutation,
-  useDelPizzaInfoMutation,
+  useGetCartQuery,
+  useSetCartMutation,
+  useDelCartMutation,
+  useUpdateCartMutation,
 } = pizzaAPI;

@@ -4,15 +4,13 @@ import headerReducer from './reducers/header';
 import categoriesReducer from './reducers/categories';
 import sortReducer from './reducers/sort';
 import cartReducer from './reducers/cart';
-import paginationReducer from './reducers/pagination';
 
 const rootReducer = combineReducers({
   [pizzaAPI.reducerPath]: pizzaAPI.reducer,
   header: headerReducer,
   categories: categoriesReducer,
   sort: sortReducer,
-  cart: cartReducer,
-  pagination: paginationReducer
+  cart: cartReducer
 })
 
 export const store = configureStore({

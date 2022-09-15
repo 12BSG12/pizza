@@ -1,13 +1,10 @@
 import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks/hooks';
-import { IPizza, ISize, IType } from '../../models/pizzaAPIType';
-import { useSetPizzaInfoMutation } from '../../redux';
-import { setCartData } from '../../redux/reducers/cart';
+import { cartDataType, IPizza, ISize, IType } from '../../models/pizzaAPIType';
+import { useSetCartMutation, useSetPizzaInfoMutation, useUpdateCartMutation } from '../../redux';
 import '../../scss/app.scss';
 
-export const PizzaBlock: FC<IPizza> = ({ id, imageUrl, title, types, sizes, price, category }) => {
-  const dispatch = useAppDispatch();
+export const PizzaBlock: FC<IPizza & {cart: cartDataType | undefined}> = ({ id, imageUrl, title, types, sizes, price, category, cart }) => {
   const [setPizzaInfo] = useSetPizzaInfoMutation();
   const [countPizza, setCountPizza] = useState<number>(0);
 
@@ -15,25 +12,32 @@ export const PizzaBlock: FC<IPizza> = ({ id, imageUrl, title, types, sizes, pric
     id: types[0].id,
     name: types[0].name,
   });
-
+  console.log(cart);
+  
   const [activePizzaSize, setActivePizzaSize] = useState<ISize>({
     id: sizes[0].id,
     size: sizes[0].size,
   });
 
-  const handleOnClick = () => {
+  const [setCart] = useSetCartMutation();
+  const [updateCart] = useUpdateCartMutation();
+
+  const handleOnClick = async () => {
     setCountPizza(countPizza + 1);
-    dispatch(
-      setCartData({
-        id,
-        title,
-        imageUrl,
-        types: activePizzaCat.name,
-        sizes: activePizzaSize.size,
-        price,
-        countPizza: countPizza + 1,
-      }),
-    );
+    const body = {
+      id,
+      title,
+      imageUrl,
+      types: activePizzaCat.name,
+      sizes: activePizzaSize.size,
+      price: price * (countPizza + 1),
+      countPizza: countPizza + 1,
+    }
+    if(id !== cart?.id){
+      await setCart(body).unwrap()
+    } else if(cart !== undefined) {
+      await updateCart({...body, price: price * (cart.countPizza + 1), countPizza: cart.countPizza + 1})
+    }
   };
   const handleSetPizzaInfo = async () => {
     await setPizzaInfo({ title, imageUrl, price, info: '123' }).unwrap();

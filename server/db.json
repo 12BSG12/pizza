@@ -350,5 +350,6 @@
     "imageUrl": null,
     "price": 0,
     "info": null
-  }
+  },
+  "cart": []
 }

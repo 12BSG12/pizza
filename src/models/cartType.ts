@@ -9,7 +9,6 @@ export type cartDataType = {
 };
 
 export type cartType = {
-  cartData: cartDataType[];
   allCount: number
   allSum: number
 };
