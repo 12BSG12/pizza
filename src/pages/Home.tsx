@@ -7,11 +7,11 @@ import { useGetCartQuery, useGetPizzaQuery } from '../redux';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { useSearchParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { setAllCount } from '../redux/reducers/cart';
+import { cartDataType } from '../models/pizzaAPIType';
 
-export const Home = () => {
-  const dispatch = useAppDispatch()
+export const Home:FC<{cart: cartDataType[]}> = ({cart}) => {
   const { catID, title } = useAppSelector((state) => state.categories);
   const { searchText } = useAppSelector((state) => state.header);
   const { sortTag, sortName } = useAppSelector((state) => state.sort);
@@ -33,11 +33,6 @@ export const Home = () => {
     sortTag,
     search: searchText,
   });
-  const cart = useGetCartQuery('');
-  
-  useEffect(() => {
-    dispatch(setAllCount(cart.data !== undefined ? cart.data : []));
-  }, [dispatch, cart.data]);
  
   return (
     <div className="container">
@@ -51,7 +46,7 @@ export const Home = () => {
       ) : (
         <div className="content__items">
           {data?.data.map((item) => (
-            <PizzaBlock {...item} cart={cart.data?.find(el => el.id === item.id)} key={item.id} />
+            <PizzaBlock {...item} cart={cart.find(el => el.id === item.id)} key={item.id} />
           ))}
         </div>
       )}

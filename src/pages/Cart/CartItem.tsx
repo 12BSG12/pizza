@@ -1,34 +1,64 @@
 import { FC } from 'react';
 import { useAppDispatch } from '../../hooks/hooks';
 import { cartDataType } from '../../models/cartType';
-import { useDelCartMutation } from '../../redux';
-import { removeCartCount } from '../../redux/reducers/cart';
+import { useDelCartMutation, useUpdateCartMutation } from '../../redux';
+import { removeCartCount, addCartCount } from '../../redux/reducers/cart';
 import '../../scss/app.scss';
 
-export const CartItem:FC<cartDataType> = ({id, title, imageUrl, types, sizes, price, countPizza}) => {
-  const dispatch = useAppDispatch()
-  const [ delCart ] = useDelCartMutation()
+export const CartItem: FC<cartDataType> = ({
+  id,
+  title,
+  imageUrl,
+  types,
+  sizes,
+  price,
+  countPizza,
+}) => {
+  const dispatch = useAppDispatch();
+  const [delCart] = useDelCartMutation();
+  const [updateCart] = useUpdateCartMutation();
 
   const handleDelCart = async () => {
     await delCart(id).unwrap();
-    dispatch(removeCartCount({countPizza, price}));
+    dispatch(removeCartCount({ countPizza, price }));
   };
 
+  const body = { id, title, imageUrl, types, sizes, price, countPizza };
+  const defaultPrice = price / countPizza
+
+  const handleOnClickMinus = async () => {
+    await updateCart({
+      ...body,
+      countPizza: countPizza - 1,
+      price: price - defaultPrice,
+    });
+    dispatch(removeCartCount({ price: defaultPrice }));
+  };
+
+  const handleOnClickPlus = async () => {
+    await updateCart({
+      ...body,
+      countPizza: countPizza + 1,
+      price: price + defaultPrice,
+    });
+    dispatch(addCartCount({ price: defaultPrice }));
+  };
   return (
     <div className="cart__item">
       <div className="cart__item-img">
-        <img
-          className="pizza-block__image"
-          src={imageUrl}
-          alt="Pizza"
-        />
+        <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
       </div>
       <div className="cart__item-info">
         <h3>{title}</h3>
-        <p>{types}, {sizes} см.</p>
+        <p>
+          {types}, {sizes} см.
+        </p>
       </div>
       <div className="cart__item-count">
-        <button className="button button--outline button--circle cart__item-count-minus" disabled={countPizza === 1}>
+        <button
+          className="button button--outline button--circle cart__item-count-minus"
+          disabled={countPizza === 1}
+          onClick={handleOnClickMinus}>
           <svg
             width="10"
             height="10"
@@ -46,7 +76,9 @@ export const CartItem:FC<cartDataType> = ({id, title, imageUrl, types, sizes, pr
           </svg>
         </button>
         <b>{countPizza}</b>
-        <button className="button button--outline button--circle cart__item-count-plus">
+        <button
+          className="button button--outline button--circle cart__item-count-plus"
+          onClick={handleOnClickPlus}>
           <svg
             width="10"
             height="10"

@@ -14,10 +14,19 @@ const cartReducer = createSlice({
       state.allCount = 0;
       state.allSum = 0;
     },
-    removeCartCount(state, action: PayloadAction<{ price: number; countPizza: number }>) {
-      const {countPizza, price} = action.payload
-      state.allCount -= countPizza;
+    removeCartCount(state, action: PayloadAction<{ price: number; countPizza?: number }>) {
+      const { countPizza, price } = action.payload;
+      if (countPizza) {
+        state.allCount -= countPizza;
+      } else {
+        state.allCount -= 1;
+      }
       state.allSum -= price;
+    },
+    addCartCount(state, action: PayloadAction<{ price: number }>) {
+      const { price } = action.payload;
+      state.allCount += 1;
+      state.allSum += price;
     },
     setAllCount(state, action: PayloadAction<cartDataType[]>) {
       state.allCount = action.payload.reduce((prev, current) => prev + current.countPizza, 0);
@@ -26,5 +35,5 @@ const cartReducer = createSlice({
   },
 });
 
-export const { clearAllCount, removeCartCount, setAllCount } = cartReducer.actions;
+export const { clearAllCount, removeCartCount, setAllCount, addCartCount } = cartReducer.actions;
 export default cartReducer.reducer;
