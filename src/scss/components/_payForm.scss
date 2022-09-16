@@ -1,0 +1,18 @@
+.pay {
+  padding-top: 15px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(5, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 10px;
+  
+  input{
+    padding: 10px;
+    border-radius: 30px;
+    font-size: 18px;
+  }
+
+  button{
+    justify-self: center;
+  }
+}

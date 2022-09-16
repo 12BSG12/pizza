@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ModalWindow } from '../../components/ModalWindow/ModalWindow';
+import { PayForm } from '../../components/PayForm/PayForm';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { useDelCartMutation, useGetCartQuery } from '../../redux';
 import { clearAllCount } from '../../redux/reducers/cart';
@@ -16,19 +17,27 @@ export const Cart = () => {
   const { allCount, allSum } = useAppSelector((state) => state.cart);
 
   const clearOnClick = async () => {
-    await Promise.all(data).then(data => data.forEach((item) => delCart(item.id)))
+    await Promise.all(data).then((data) => data.forEach((item) => delCart(item.id)));
     dispatch(clearAllCount());
   };
 
-  const[open, setOpen] = useState<boolean>(false);
-
+  const [open, setOpen] = useState<boolean>(false);
   const openModalWindow = () => {
-    setOpen(true)
-  }
-
+    setOpen(true);
+  };
   const closeModalWindow = () => {
-    setOpen(false)
-  }
+    setOpen(false);
+  };
+
+  const [openPay, setOpenPayForm] = useState<boolean>(false);
+  const openPayForm = () => {
+    setOpenPayForm(true);
+  };
+  const closePayForm = () => {
+    setOpenPayForm(false);
+  };
+
+
 
   return (
     <div className="container container--cart">
@@ -106,12 +115,14 @@ export const Cart = () => {
             </div>
           </div>
           <ModalWindow open={open} closeModalWindow={closeModalWindow}>
-            <h2 className='modal__title'>Очистить корзину?</h2>
+            <h2 className="modal__title">Очистить корзину?</h2>
             <div className="cart__bottom-buttons">
               <div className="button pay-btn" onClick={clearOnClick}>
                 <span>Да</span>
               </div>
-              <div className="button button--outline button--add go-back-btn" onClick={closeModalWindow}>
+              <div
+                className="button button--outline button--add go-back-btn"
+                onClick={closeModalWindow}>
                 <span>Нет</span>
               </div>
             </div>
@@ -151,9 +162,13 @@ export const Cart = () => {
                 </svg>
                 <span>Вернуться назад</span>
               </Link>
-              <div className="button pay-btn">
+              <div className="button pay-btn" onClick={openPayForm}>
                 <span>Оплатить сейчас</span>
               </div>
+              <ModalWindow open={openPay} closeModalWindow={closePayForm}>
+                <h2 className="modal__title">Скам Касса &#129297;</h2>
+                <PayForm />
+              </ModalWindow>
             </div>
           </div>
         </div>
