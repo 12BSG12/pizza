@@ -1,4 +1,5 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
+import { ModalWindow } from '../../components/ModalWindow/ModalWindow';
 import { useAppDispatch } from '../../hooks/hooks';
 import { cartDataType } from '../../models/cartType';
 import { useDelCartMutation, useUpdateCartMutation } from '../../redux';
@@ -43,6 +44,17 @@ export const CartItem: FC<cartDataType> = ({
     });
     dispatch(addCartCount({ price: defaultPrice }));
   };
+
+  const[open, setOpen] = useState<boolean>(false);
+
+  const openModalWindow = () => {
+    setOpen(true)
+  }
+
+  const closeModalWindow = () => {
+    setOpen(false)
+  }
+
   return (
     <div className="cart__item">
       <div className="cart__item-img">
@@ -100,7 +112,7 @@ export const CartItem: FC<cartDataType> = ({
         <b>{price} ₽</b>
       </div>
       <div className="cart__item-remove">
-        <div className="button button--outline button--circle" onClick={handleDelCart}>
+        <div className="button button--outline button--circle" onClick={openModalWindow}>
           <svg
             width="10"
             height="10"
@@ -118,6 +130,17 @@ export const CartItem: FC<cartDataType> = ({
           </svg>
         </div>
       </div>
+      <ModalWindow open={open} closeModalWindow={closeModalWindow}>
+        <h2 className='modal__title'>Вы действительно хотите удалить товар?</h2>
+        <div className="cart__bottom-buttons">
+          <div className="button pay-btn" onClick={handleDelCart}>
+            <span>Да</span>
+          </div>
+          <div className="button button--outline button--add go-back-btn" onClick={closeModalWindow}>
+            <span>Нет</span>
+          </div>
+        </div>
+      </ModalWindow>
     </div>
   );
 };

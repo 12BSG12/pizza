@@ -358,25 +358,7 @@
       "imageUrl": "https://dodopizza.azureedge.net/static/Img/Products/Pizza/ru-RU/af553bf5-3887-4501-b88e-8f0f55229429.jpg",
       "types": "традиционное",
       "sizes": 26,
-      "price": 550,
-      "countPizza": 2
-    },
-    {
-      "id": 3,
-      "title": "Цыпленок барбекю",
-      "imageUrl": "https://dodopizza.azureedge.net/static/Img/Products/Pizza/ru-RU/6652fec1-04df-49d8-8744-232f1032c44b.jpg",
-      "types": "тонкое",
-      "sizes": 26,
-      "price": 295,
-      "countPizza": 1
-    },
-    {
-      "id": 1,
-      "title": "Пепперони Фреш с перцем",
-      "imageUrl": "https://dodopizza.azureedge.net/static/Img/Products/f035c7f46c0844069722f2bb3ee9f113_584x584.jpeg",
-      "types": "тонкое",
-      "sizes": 26,
-      "price": 803,
+      "price": 275,
       "countPizza": 1
     }
   ]

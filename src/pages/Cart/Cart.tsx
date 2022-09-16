@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { ModalWindow } from '../../components/ModalWindow/ModalWindow';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { useDelCartMutation, useGetCartQuery } from '../../redux';
 import { clearAllCount } from '../../redux/reducers/cart';
@@ -17,6 +19,16 @@ export const Cart = () => {
     await Promise.all(data).then(data => data.forEach((item) => delCart(item.id)))
     dispatch(clearAllCount());
   };
+
+  const[open, setOpen] = useState<boolean>(false);
+
+  const openModalWindow = () => {
+    setOpen(true)
+  }
+
+  const closeModalWindow = () => {
+    setOpen(false)
+  }
 
   return (
     <div className="container container--cart">
@@ -54,7 +66,7 @@ export const Cart = () => {
               </svg>
               Корзина
             </h2>
-            <div className="cart__clear" onClick={clearOnClick}>
+            <div className="cart__clear" onClick={openModalWindow}>
               <svg
                 width="20"
                 height="20"
@@ -93,6 +105,17 @@ export const Cart = () => {
               <span>Очистить корзину</span>
             </div>
           </div>
+          <ModalWindow open={open} closeModalWindow={closeModalWindow}>
+            <h2 className='modal__title'>Очистить корзину?</h2>
+            <div className="cart__bottom-buttons">
+              <div className="button pay-btn" onClick={clearOnClick}>
+                <span>Да</span>
+              </div>
+              <div className="button button--outline button--add go-back-btn" onClick={closeModalWindow}>
+                <span>Нет</span>
+              </div>
+            </div>
+          </ModalWindow>
           <div className="content__items">
             {data.map((item, index) => (
               <CartItem key={index} {...item} />
