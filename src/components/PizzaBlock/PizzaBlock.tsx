@@ -4,7 +4,16 @@ import { cartDataType, IPizza, ISize, IType } from '../../models/pizzaAPIType';
 import { useSetCartMutation, useSetPizzaInfoMutation, useUpdateCartMutation } from '../../redux';
 import '../../scss/app.scss';
 
-export const PizzaBlock: FC<IPizza & {cart: cartDataType | undefined}> = ({ id, imageUrl, title, types, sizes, price, category, cart }) => {
+export const PizzaBlock: FC<IPizza & { cart: cartDataType | undefined }> = ({
+  id,
+  imageUrl,
+  title,
+  types,
+  sizes,
+  price,
+  category,
+  cart,
+}) => {
   const [setPizzaInfo] = useSetPizzaInfoMutation();
   const [countPizza, setCountPizza] = useState<number>(0);
 
@@ -13,7 +22,7 @@ export const PizzaBlock: FC<IPizza & {cart: cartDataType | undefined}> = ({ id, 
     name: types[0].name,
   });
   console.log(cart);
-  
+
   const [activePizzaSize, setActivePizzaSize] = useState<ISize>({
     id: sizes[0].id,
     size: sizes[0].size,
@@ -32,11 +41,15 @@ export const PizzaBlock: FC<IPizza & {cart: cartDataType | undefined}> = ({ id, 
       sizes: activePizzaSize.size,
       price: price * (countPizza + 1),
       countPizza: countPizza + 1,
-    }
-    if(id !== cart?.id){
-      await setCart(body).unwrap()
-    } else if(cart !== undefined) {
-      await updateCart({...body, price: price * (cart.countPizza + 1), countPizza: cart.countPizza + 1})
+    };
+    if (id !== cart?.id) {
+      await setCart(body).unwrap();
+    } else if (cart !== undefined) {
+      await updateCart({
+        ...body,
+        price: price * (cart.countPizza + 1),
+        countPizza: cart.countPizza + 1,
+      });
     }
   };
   const handleSetPizzaInfo = async () => {
@@ -85,7 +98,7 @@ export const PizzaBlock: FC<IPizza & {cart: cartDataType | undefined}> = ({ id, 
             />
           </svg>
           <span>Добавить</span>
-          {countPizza !== 0 && <i>{countPizza}</i>}
+          {cart?.countPizza && <i>{cart?.countPizza}</i>}
         </div>
       </div>
     </div>

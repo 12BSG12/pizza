@@ -11,9 +11,9 @@ import { useGetCartQuery } from './redux';
 import { setAllCount } from './redux/reducers/cart';
 
 export const App = () => {
-  const dispatch = useAppDispatch()
-  const {data = []} = useGetCartQuery('');
-  
+  const dispatch = useAppDispatch();
+  const { data = [] } = useGetCartQuery('');
+
   useEffect(() => {
     dispatch(setAllCount(data));
   }, [dispatch, data]);
@@ -23,7 +23,7 @@ export const App = () => {
       <Header />
       <div className="content">
         <Routes>
-          <Route path="/" element={<Home cart={data}/>}/>
+          <Route path="/" element={<Home cart={data} />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/pizza_info/:id" element={<PizzaInfo />} />
           <Route path="*" element={<NotFound />} />

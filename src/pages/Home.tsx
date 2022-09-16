@@ -2,13 +2,12 @@ import '../scss/app.scss';
 import { Categories } from '../components/Categories/Categories';
 import { PizzaBlock } from '../components/PizzaBlock/PizzaBlock';
 import { Sort } from '../components/Sort/Sort';
-import { useAppSelector, useAppDispatch } from '../hooks/hooks';
-import { useGetCartQuery, useGetPizzaQuery } from '../redux';
+import { useAppSelector } from '../hooks/hooks';
+import { useGetPizzaQuery } from '../redux';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { useSearchParams } from 'react-router-dom';
-import { FC, useEffect } from 'react';
-import { setAllCount } from '../redux/reducers/cart';
+import { FC } from 'react';
 import { cartDataType } from '../models/pizzaAPIType';
 
 export const Home:FC<{cart: cartDataType[]}> = ({cart}) => {
