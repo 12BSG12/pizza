@@ -1,18 +1,57 @@
 .pay {
   padding-top: 15px;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: repeat(5, 1fr);
-  grid-column-gap: 0px;
-  grid-row-gap: 10px;
-  
-  input{
+  display: flex;
+  flex-direction: column;
+  div {
+    margin-bottom: 15px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  input {
+    width: 100%;
     padding: 10px;
     border-radius: 30px;
     font-size: 18px;
   }
 
-  button{
-    justify-self: center;
+  input[type='number'] {
+    -moz-appearance: textfield;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+
+  button {
+    margin: 0 auto;
+  }
+  p {
+    padding-left: 5px;
+  }
+}
+
+.success-block{
+  padding-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  flex-direction: column;
+  animation: success-show 0.5s cubic-bezier(0.25, 0.75, 0.5, 1.25);
+
+  img {
+    width: 120px;
+    height: 120px;
+  }
+
+  h3 {
+    font-size: 24px;
+    margin: 10px 0;
+  }
+
+  button {
+    max-width: 100px;
   }
 }
