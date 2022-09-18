@@ -4,6 +4,7 @@ import { ISort } from '../../models/pizzaAPIType';
 import { useGetSortQuery } from '../../redux';
 import { setSortTag } from '../../redux/reducers/sort';
 import '../../scss/app.scss';
+import { Skeleton } from './Skeleton';
 
 export const Sort = () => {
   const { data = [], isLoading } = useGetSortQuery('');
@@ -33,7 +34,7 @@ export const Sort = () => {
   return (
     <>
       {isLoading ? (
-        <div>Loading...</div>
+        <Skeleton />
       ) : (
         <div className="sort" ref={rootEl}>
           <div className="sort__label">

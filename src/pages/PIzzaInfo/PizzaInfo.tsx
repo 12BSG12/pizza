@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
-import { useGetPizzaInfoQuery, useSetPizzaInfoMutation } from '../redux';
-import '../scss/app.scss';
+import { useGetPizzaInfoQuery, useSetPizzaInfoMutation } from '../../redux';
+import '../../scss/app.scss';
+import { Skeleton } from './Skeleton';
 
 export const PizzaInfo = () => {
   const { data, isLoading, isFetching } = useGetPizzaInfoQuery('');
@@ -12,7 +13,7 @@ export const PizzaInfo = () => {
   return (
     <div className="container">
       {isLoading || isFetching ? (
-        <div>Loading...</div>
+        <Skeleton />
       ) : (
         <div className="pizza-info">
           <div className="pizza-info__left">

@@ -4,7 +4,7 @@ import './scss/app.scss';
 import { Cart } from './pages/Cart/Cart';
 import { Route, Routes } from 'react-router-dom';
 import { NotFound } from './pages/NotFound';
-import { PizzaInfo } from './pages/PizzaInfo';
+import { PizzaInfo } from './pages/PIzzaInfo/PizzaInfo';
 import { useEffect } from 'react';
 import { useAppDispatch } from './hooks/hooks';
 import { useGetCartQuery } from './redux';

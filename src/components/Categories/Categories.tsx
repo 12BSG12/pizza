@@ -5,6 +5,7 @@ import { ICategories } from '../../models/pizzaAPIType';
 import { useGetCategoriesQuery } from '../../redux';
 import { setIdAndTitle } from '../../redux/reducers/categories';
 import '../../scss/app.scss';
+import { Skeleton } from './Skeleton';
 
 export const Categories = () => {
   const dispatch = useAppDispatch();
@@ -22,7 +23,7 @@ export const Categories = () => {
   return (
     <div className="categories">
       {isLoading ? (
-        <div>Loading...</div>
+        <Skeleton />
       ) : (
         <ul>
           {data.map((item) => (

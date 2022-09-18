@@ -1,6 +1,7 @@
 import '../scss/app.scss';
 import { Categories } from '../components/Categories/Categories';
 import { PizzaBlock } from '../components/PizzaBlock/PizzaBlock';
+import { Skeleton } from '../components/PizzaBlock/Skeleton';
 import { Sort } from '../components/Sort/Sort';
 import { useAppSelector } from '../hooks/hooks';
 import { useGetPizzaQuery } from '../redux';
@@ -40,8 +41,8 @@ export const Home:FC<{cart: cartDataType[]}> = ({cart}) => {
         <Sort />
       </div>
       <h2 className="content__title">{title} пиццы</h2>
-      {isLoading || isFetching ? (
-        <div>Loading...</div>
+      {isLoading || isFetching? (
+        [...Array(!data?.data ? 4 : data.data.length)].map((_, index) => <Skeleton key={index}/>)
       ) : (
         <div className="content__items">
           {data?.data.map((item) => (
