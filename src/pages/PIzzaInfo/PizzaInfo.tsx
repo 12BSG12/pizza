@@ -15,20 +15,22 @@ const PizzaInfo = () => {
       {isLoading || isFetching ? (
         <Skeleton />
       ) : (
-        <div className="pizza-info">
-          <div className="pizza-info__left">
-            <img src={data?.imageUrl ?? ''} alt="Pizza" />
-            <h2>
-              Пицца {data?.title?.toLowerCase()} цена от {data?.price} ₽
-            </h2>
-            <Link to="/" onClick={handleDelPizzaInfo}>
-              <button className="button button--outline button--add">
-                <span>Назад</span>
-              </button>
-            </Link>
+        <>
+          <div className="pizza-info">
+            <div className="pizza-info__left">
+              <img src={data?.imageUrl ?? ''} alt="Pizza" />
+              <h2>
+                Пицца {data?.title?.toLowerCase()} цена от {data?.price} ₽
+              </h2>
+            </div>
+            <div className="pizza-info__right">{data?.info}</div>
           </div>
-          <div className="pizza-info__right">{data?.info}</div>
-        </div>
+          <Link to="/" onClick={handleDelPizzaInfo}>
+            <button className="button button--outline button--add">
+              <span>Назад</span>
+            </button>
+          </Link>
+        </>
       )}
     </div>
   );

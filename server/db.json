@@ -360,6 +360,15 @@
       "sizes": 26,
       "price": 275,
       "countPizza": 1
+    },
+    {
+      "id": 3,
+      "title": "Цыпленок барбекю",
+      "imageUrl": "https://dodopizza.azureedge.net/static/Img/Products/Pizza/ru-RU/6652fec1-04df-49d8-8744-232f1032c44b.jpg",
+      "types": "тонкое",
+      "sizes": 26,
+      "price": 295,
+      "countPizza": 1
     }
   ]
 }

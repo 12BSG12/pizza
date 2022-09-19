@@ -3,11 +3,16 @@
 .header {
   border-bottom: 1px solid $gray-line;
   padding: 40px 0;
-
+  @media (max-width: 1380px) {
+    padding: 20px 0;
+  }
   .container {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    @media (max-width: 1120px) {
+      flex-direction: column;
+    }
   }
 
   &__logo {
@@ -28,6 +33,9 @@
     p {
       color: #7b7b7b;
     }
+    @media (max-width: 1120px) {
+      margin-bottom: 15px;
+    }
   }
   &__search {
     position: relative;
@@ -46,6 +54,13 @@
       font-size: 16px;
       padding: 12px 20px 12px 42px;
       width: 400px;
+      @media (max-width: 560px) {
+        width: 250px;
+      }
+    }
+    @media (max-width: 1380px) {
+      left: 0;
+      margin-bottom: 15px;
     }
   }
 }

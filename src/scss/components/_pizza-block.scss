@@ -10,10 +10,12 @@
     transform: scale(1.03);
   }
   
-  &:not(:nth-of-type(4n)) {
-    margin-right: 35px;
+  &-wrapper { 
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
-
+  
   &__image {
     width: 260px;
   }
