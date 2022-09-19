@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { setIsSwitched } from '../redux/reducers/header';
 import { useAppDispatch } from '../hooks/hooks';
 
-export const NotFound = () => {
+const NotFound = () => {
   const dispatch = useAppDispatch();
   return (
     <div className="cart cart--empty">
@@ -20,3 +20,5 @@ export const NotFound = () => {
     </div>
   )
 }
+
+export default NotFound

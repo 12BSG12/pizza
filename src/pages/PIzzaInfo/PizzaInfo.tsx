@@ -3,7 +3,7 @@ import { useGetPizzaInfoQuery, useSetPizzaInfoMutation } from '../../redux';
 import '../../scss/app.scss';
 import { Skeleton } from './Skeleton';
 
-export const PizzaInfo = () => {
+const PizzaInfo = () => {
   const { data, isLoading, isFetching } = useGetPizzaInfoQuery('');
   const [setPizzaInfo] = useSetPizzaInfoMutation();
 
@@ -33,3 +33,5 @@ export const PizzaInfo = () => {
     </div>
   );
 };
+
+export default PizzaInfo

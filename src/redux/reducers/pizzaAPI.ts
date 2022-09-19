@@ -73,7 +73,17 @@ export const pizzaAPI = createApi({
       query: () => ({
         url: `cart`,
       }),
-      providesTags: ['Cart'],
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({ type: 'Cart' as const, id })),
+              { type: 'Cart', id: 'LIST' },
+              { type: 'Cart', id: 'DEL-LIST' },
+            ]
+          : [
+              { type: 'Cart', id: 'LIST' },
+              { type: 'Cart', id: 'DEL-LIST' },
+            ],
     }),
     setCart: builder.mutation<cartDataType, cartDataType>({
       query: (body) => ({
@@ -81,7 +91,7 @@ export const pizzaAPI = createApi({
         method: 'POST',
         body,
       }),
-      invalidatesTags: ['Cart'],
+      invalidatesTags: [{ type: 'Cart', id: 'LIST' }],
     }),
     updateCart: builder.mutation<cartDataType, cartDataType>({
       query: (body) => ({
@@ -89,14 +99,14 @@ export const pizzaAPI = createApi({
         method: 'PUT',
         body,
       }),
-      invalidatesTags: ['Cart'],
+      invalidatesTags: (result, error, body) => [{ type: 'Cart', id: body.id }],
     }),
     delCart: builder.mutation<cartDataType, number>({
       query: (id) => ({
         url: `cart/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['Cart'],
+      invalidatesTags: [{ type: 'Cart', id: 'DEL-LIST' }],
     }),
   }),
 });

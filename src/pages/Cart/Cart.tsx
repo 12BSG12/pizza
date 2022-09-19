@@ -10,7 +10,7 @@ import '../../scss/app.scss';
 import { CartEmpty } from './CartEmpty';
 import { CartItem } from './CartItem';
 
-export const Cart = () => {
+const Cart = () => {
   const dispatch = useAppDispatch();
   const { data = [] } = useGetCartQuery('');
   const [delCart] = useDelCartMutation();
@@ -178,3 +178,5 @@ export const Cart = () => {
     </div>
   );
 };
+
+export default Cart;
