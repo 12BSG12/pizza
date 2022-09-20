@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
+  authType,
   cartDataType,
   ICategories,
   IPizza,
@@ -11,7 +12,7 @@ import {
 
 export const pizzaAPI = createApi({
   reducerPath: 'pizzaAPI',
-  tagTypes: ['pizzaInfo', 'Cart'],
+  tagTypes: ['pizzaInfo', 'Cart', 'Auth'],
   baseQuery: fetchBaseQuery({
     baseUrl: 'http://localhost:3001/',
   }),
@@ -108,6 +109,20 @@ export const pizzaAPI = createApi({
       }),
       invalidatesTags: [{ type: 'Cart', id: 'DEL-LIST' }],
     }),
+    getUser: builder.query<authType, string>({
+      query: () => ({
+        url: `auth`,
+      }),
+      providesTags: ['Auth']
+    }),
+    setUser: builder.mutation<authType, authType>({
+      query: (body) => ({
+        url: `auth`,
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: ['Auth']
+    }),
   }),
 });
 
@@ -121,4 +136,6 @@ export const {
   useSetCartMutation,
   useDelCartMutation,
   useUpdateCartMutation,
+  useGetUserQuery,
+  useSetUserMutation,
 } = pizzaAPI;

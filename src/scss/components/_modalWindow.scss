@@ -47,6 +47,13 @@
   &__title{
     text-align: center;
   }
+  &__bottom{
+    text-align: center;
+    cursor: pointer;
+    &:hover{
+      text-decoration: underline;
+    }
+  }
 }
 
 .overlay.animated {

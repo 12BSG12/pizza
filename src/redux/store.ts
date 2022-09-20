@@ -10,7 +10,7 @@ const rootReducer = combineReducers({
   header: headerReducer,
   categories: categoriesReducer,
   sort: sortReducer,
-  cart: cartReducer
+  cart: cartReducer,
 })
 
 export const store = configureStore({

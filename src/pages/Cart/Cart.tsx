@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Login } from '../../components/auth/Login/Login';
+import { Registration } from '../../components/auth/Registration/Registration';
 import { ModalWindow } from '../../components/ModalWindow/ModalWindow';
 import { PayForm } from '../../components/PayForm/PayForm';
+import { useAuth } from '../../hooks/auth';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { useDelCartMutation, useGetCartQuery } from '../../redux';
 import { clearAllCount } from '../../redux/reducers/cart';
@@ -15,6 +18,8 @@ const Cart = () => {
   const { data = [] } = useGetCartQuery('');
   const [delCart] = useDelCartMutation();
   const { allCount, allSum } = useAppSelector((state) => state.cart);
+  const [isLogin, setIsLogin] = useState<boolean>(true);
+  const {isAuth} = useAuth();
 
   const clearOnClick = async () => {
     await Promise.all(data).then((data) => data.forEach((item) => delCart(item.id)));
@@ -36,8 +41,6 @@ const Cart = () => {
   const closePayForm = () => {
     setOpenPayForm(false);
   };
-
-
 
   return (
     <div className="container container--cart">
@@ -165,10 +168,16 @@ const Cart = () => {
               <div className="button pay-btn" onClick={openPayForm}>
                 <span>Оплатить сейчас</span>
               </div>
-              <ModalWindow open={openPay} closeModalWindow={closePayForm}>
-                <h2 className="modal__title">Скам Касса &#129297;</h2>
-                <PayForm />
-              </ModalWindow>
+              {isAuth ? (
+                <ModalWindow open={openPay} closeModalWindow={closePayForm}>
+                  <h2 className="modal__title">Скам Касса &#129297;</h2>
+                  <PayForm />
+                </ModalWindow>
+              ) : (
+                <ModalWindow open={openPay} closeModalWindow={closePayForm}>
+                  {isLogin ? <Login onClick={setIsLogin}/> : <Registration onClick={setIsLogin}/>}
+                </ModalWindow>
+              )}
             </div>
           </div>
         </div>

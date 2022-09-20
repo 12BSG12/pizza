@@ -64,3 +64,9 @@ export type cartType = {
   allCount?: number
   allSum?: number
 };
+
+export type authType = {
+  id: string | null,
+  email: string | null,
+  token: string | null
+}

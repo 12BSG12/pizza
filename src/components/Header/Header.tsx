@@ -3,11 +3,14 @@ import logo from '../../assets/img/pizza-logo.svg';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { setIsSwitched, setSearchText } from '../../redux/reducers/header';
 import { Link } from 'react-router-dom';
-import { useSetPizzaInfoMutation } from '../../redux';
+import { useSetPizzaInfoMutation, useSetUserMutation } from '../../redux';
+import { useAuth } from '../../hooks/auth';
 
 export const Header = () => {
   const dispatch = useAppDispatch();
   const [setPizzaInfo] = useSetPizzaInfoMutation();
+  const [removeUser] = useSetUserMutation();
+  const { isAuth } = useAuth();
 
   const { searchText, isSwitched } = useAppSelector((state) => state.header);
   const { allCount, allSum } = useAppSelector((state) => state.cart);
@@ -107,6 +110,11 @@ export const Header = () => {
               </Link>
             </div>
           </>
+        )}
+        {isAuth && (
+          <span className="auth" onClick={() => removeUser({ id: null, email: null, token: null })}>
+            Log Out
+          </span>
         )}
       </div>
     </div>
