@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Login } from '../../components/auth/Login/Login';
-import { Registration } from '../../components/auth/Registration/Registration';
+import { Auth } from '../../components/auth/Auth';
 import { ModalWindow } from '../../components/ModalWindow/ModalWindow';
 import { PayForm } from '../../components/PayForm/PayForm';
 import { useAuth } from '../../hooks/auth';
@@ -18,8 +17,7 @@ const Cart = () => {
   const { data = [] } = useGetCartQuery('');
   const [delCart] = useDelCartMutation();
   const { allCount, allSum } = useAppSelector((state) => state.cart);
-  const [isLogin, setIsLogin] = useState<boolean>(true);
-  const {isAuth} = useAuth();
+  const { isAuth } = useAuth();
 
   const clearOnClick = async () => {
     await Promise.all(data).then((data) => data.forEach((item) => delCart(item.id)));
@@ -174,9 +172,7 @@ const Cart = () => {
                   <PayForm />
                 </ModalWindow>
               ) : (
-                <ModalWindow open={openPay} closeModalWindow={closePayForm}>
-                  {isLogin ? <Login onClick={setIsLogin}/> : <Registration onClick={setIsLogin}/>}
-                </ModalWindow>
+                <Auth openPay={openPay} closePayForm={closePayForm} />
               )}
             </div>
           </div>

@@ -3,12 +3,10 @@ import { FormType } from './FormType';
 import styles from '../Login/LoginForm.module.scss';
 import '../../../scss/app.scss';
 import { getAuth, createUserWithEmailAndPassword  } from 'firebase/auth';
-import { useNavigate } from "react-router-dom";
 import { useSetUserMutation } from '../../../redux';
 
 export const RegForm = () => {
   const [ setUser ] = useSetUserMutation();
-  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -23,7 +21,6 @@ export const RegForm = () => {
           email: user.email,
           token: user.refreshToken,
         });
-        navigate('/cart');
       })
       .catch((error) => {
         console.log(error);
