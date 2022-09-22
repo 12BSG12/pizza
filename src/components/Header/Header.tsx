@@ -6,7 +6,8 @@ import { Link } from 'react-router-dom';
 import { useSetPizzaInfoMutation, useSetUserMutation } from '../../redux';
 import { useAuth } from '../../hooks/auth';
 import { Auth } from '../auth/Auth';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import searchClear from '../../assets/img/search-clear.svg';
 
 export const Header = () => {
   const dispatch = useAppDispatch();
@@ -28,6 +29,13 @@ export const Header = () => {
   };
   const closeForm = () => {
     setOpenForm(false);
+  };
+
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  const onClickSearchClear = () => {
+    dispatch(setSearchText(''));
+    inputRef.current?.focus();
   };
 
   return (
@@ -78,9 +86,18 @@ export const Header = () => {
                 </svg>
                 <input
                   placeholder="Поиск пиццы..."
+                  ref={inputRef}
                   value={searchText}
                   onChange={(e) => dispatch(setSearchText(e.target.value))}
                 />
+                {searchText && (
+                  <img
+                    className="header__searchClear"
+                    src={searchClear}
+                    alt="clear"
+                    onClick={onClickSearchClear}
+                  />
+                )}
               </div>
               <div className="header__cart">
                 <Link
