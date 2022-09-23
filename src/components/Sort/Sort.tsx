@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { useAppDispatch } from '../../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { ISort } from '../../models/pizzaAPIType';
 import { useGetSortQuery } from '../../redux';
 import { setSortTag } from '../../redux/reducers/sort';
@@ -9,15 +9,12 @@ import { Skeleton } from './Skeleton';
 export const Sort = () => {
   const { data = [], isLoading } = useGetSortQuery('');
   const dispatch = useAppDispatch();
-  const [activeItem, setActiveItem] = useState<ISort>({
-    id: 1,
-    sortName: 'популярности (убыв.)',
-  });
+
+  const { sortName } = useAppSelector((state) => state.sort);
 
   const [isActivePopup, setIsActivePopup] = useState<boolean>(false);
 
   const handlerOnClick = (item: ISort) => {
-    setActiveItem({ id: item.id, sortName: item.sortName });
     dispatch(setSortTag({ sortName: item.sortName }));
   };
 
@@ -51,14 +48,14 @@ export const Sort = () => {
               />
             </svg>
             <b>Сортировка по:</b>
-            <span onClick={() => setIsActivePopup(!isActivePopup)}>{activeItem.sortName}</span>
+            <span onClick={() => setIsActivePopup(!isActivePopup)}>{sortName}</span>
           </div>
           {isActivePopup && (
             <div className="sort__popup">
               <ul>
-                {data.map((item) => (
+                {data.map((item, index) => (
                   <li
-                    className={item.id === activeItem.id ? 'active' : ''}
+                    className={item.id === index ? 'active' : ''}
                     key={item.id}
                     onClick={() => handlerOnClick(item)}>
                     {item.sortName}

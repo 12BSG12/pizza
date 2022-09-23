@@ -18,32 +18,21 @@ export const pizzaAPI = createApi({
   }),
   endpoints: (builder) => ({
     getPizza: builder.query<pizzaApiType, pizzaArgType>({
-      query: ({ page = 1, limit, search }) => ({
-        url: `data?_page=${page}&_limit=${limit}&q=${search}`,
+      query: ({ page = 1, limit, search, catID, sortTag, sortName }) => ({
+        url: `data?${catID !== 0 ? `category=${catID}` : ''}`,
+        params: {
+          _page: page,
+          _limit: limit,
+          q: search,
+          _sort: sortTag,
+          _order: sortName.replace(/\s/g, '').endsWith('(убыв.)') ? 'desc' : 'asc',
+        },
       }),
       transformResponse: (response: IPizza[], meta, arg) => {
-        const sortResponse = (response: IPizza[]) => {
-          const sortTagName = (a: IPizza, b: IPizza) => a.title.localeCompare(b.title);
-
-          if (arg.sortName.replace(/\s/g, '').endsWith('(убыв.)')) {
-            if (arg.sortTag === 'title') return response.sort(sortTagName).reverse();
-            return response.sort((a: any, b: any) => b[arg.sortTag] - a[arg.sortTag]);
-          } else {
-            if (arg.sortTag === 'title') return response.sort(sortTagName);
-            return response.sort((a: any, b: any) => a[arg.sortTag] - b[arg.sortTag]);
-          }
+        return {
+          data: response,
+          totalCount: Number(meta?.response?.headers.get('X-Total-Count')),
         };
-        if (arg.catID !== 0) {
-          return {
-            data: sortResponse(response.filter((item) => item.category === arg.catID)),
-            totalCount: Number(meta?.response?.headers.get('X-Total-Count')),
-          };
-        } else {
-          return {
-            data: sortResponse(response),
-            totalCount: Number(meta?.response?.headers.get('X-Total-Count')),
-          };
-        }
       },
     }),
     getCategories: builder.query<ICategories[], string>({
@@ -113,15 +102,15 @@ export const pizzaAPI = createApi({
       query: () => ({
         url: `auth`,
       }),
-      providesTags: ['Auth']
+      providesTags: ['Auth'],
     }),
     setUser: builder.mutation<authType, authType>({
       query: (body) => ({
         url: `auth`,
         method: 'POST',
-        body
+        body,
       }),
-      invalidatesTags: ['Auth']
+      invalidatesTags: ['Auth'],
     }),
   }),
 });

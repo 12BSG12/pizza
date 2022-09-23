@@ -11,7 +11,6 @@ export const PizzaBlock: FC<IPizza & { cart: cartDataType | undefined }> = ({
   types,
   sizes,
   price,
-  category,
   cart,
 }) => {
   const [setPizzaInfo] = useSetPizzaInfoMutation();
@@ -21,7 +20,6 @@ export const PizzaBlock: FC<IPizza & { cart: cartDataType | undefined }> = ({
     id: types[0].id,
     name: types[0].name,
   });
-  console.log(cart);
 
   const [activePizzaSize, setActivePizzaSize] = useState<ISize>({
     id: sizes[0].id,

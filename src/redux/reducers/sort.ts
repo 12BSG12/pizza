@@ -1,15 +1,23 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { sortType } from '../../models/sortType'
+import { categoriesType, sortType } from '../../models/sortType'
 
 const initialState: sortType = {
+  catID: 0,
+  title: 'Все',
   sortTag: 'category',
-  sortName: 'популярности (убыв.)'
+  sortName: 'популярности (убыв.)',
+  currentPage: 1,
 }
 
 const sortReducer = createSlice({
   name: 'sort',
   initialState,
   reducers: {
+    setIdAndTitle(state, action: PayloadAction<categoriesType>) {
+      const {catID, title} = action.payload
+      state.catID = catID;
+      state.title = title
+    },
     setSortTag (state, action: PayloadAction<{sortName: string}>) {
       const {sortName} = action.payload
       state.sortName = sortName
@@ -20,9 +28,12 @@ const sortReducer = createSlice({
       } else {
         state.sortTag = 'title'
       }
-    }
+    },
+    setCurrentPage (state, action: PayloadAction<number>) {
+      state.currentPage = action.payload
+    },
   }
 })
 
-export const { setSortTag } = sortReducer.actions
+export const { setSortTag, setCurrentPage, setIdAndTitle } = sortReducer.actions
 export default sortReducer.reducer

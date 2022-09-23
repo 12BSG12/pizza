@@ -6,8 +6,10 @@ import { Link } from 'react-router-dom';
 import { useSetPizzaInfoMutation, useSetUserMutation } from '../../redux';
 import { useAuth } from '../../hooks/auth';
 import { Auth } from '../auth/Auth';
-import { useRef, useState } from 'react';
+import { ChangeEvent, useCallback, useRef, useState } from 'react';
 import searchClear from '../../assets/img/search-clear.svg';
+import debounce from 'lodash.debounce';
+import { setCurrentPage, setIdAndTitle } from '../../redux/reducers/sort';
 
 export const Header = () => {
   const dispatch = useAppDispatch();
@@ -17,6 +19,7 @@ export const Header = () => {
 
   const { searchText, isSwitched } = useAppSelector((state) => state.header);
   const { allCount, allSum } = useAppSelector((state) => state.cart);
+  const [value, setValue] = useState(searchText);
 
   const handleDelPizzaInfo = async () => {
     await setPizzaInfo({ title: null, imageUrl: null, price: 0, info: null }).unwrap();
@@ -34,10 +37,25 @@ export const Header = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const onClickSearchClear = () => {
-    dispatch(setSearchText(''));
+    setValue('');
+    updateSearchValue('');
     inputRef.current?.focus();
   };
 
+  const handleOnChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch(setCurrentPage(1));
+    dispatch(setIdAndTitle({ catID: 0, title: 'Все' }));
+    setValue(e.target.value);
+    updateSearchValue(e.target.value);
+  };
+
+  const updateSearchValue = useCallback(
+    debounce((value: string) => {
+      dispatch(setSearchText(value));
+    }, 250),
+    [dispatch],
+  );
+  
   return (
     <>
       <div className="header">
@@ -87,10 +105,10 @@ export const Header = () => {
                 <input
                   placeholder="Поиск пиццы..."
                   ref={inputRef}
-                  value={searchText}
-                  onChange={(e) => dispatch(setSearchText(e.target.value))}
+                  value={value}
+                  onChange={handleOnChangeSearch}
                 />
-                {searchText && (
+                {value && (
                   <img
                     className="header__searchClear"
                     src={searchClear}
