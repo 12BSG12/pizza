@@ -6,6 +6,10 @@ import { setSortTag } from '../../redux/reducers/sort';
 import '../../scss/app.scss';
 import { Skeleton } from './Skeleton';
 
+type PopupClick = MouseEvent & {
+  path: Node[];
+};
+
 export const Sort = () => {
   const { data = [], isLoading } = useGetSortQuery('');
   const dispatch = useAppDispatch();
@@ -21,12 +25,15 @@ export const Sort = () => {
   const rootEl = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if(isActivePopup){
-      const onClick = (e: any) => rootEl?.current?.contains(e.target) || setIsActivePopup(false);
-      document.addEventListener('click', onClick);
-      return () => document.removeEventListener('click', onClick);
-    }
-  }, [isActivePopup]);
+    const handleClickOutside = (event: MouseEvent) => {
+      const _event = event as PopupClick;
+      if (rootEl.current && !_event.path.includes(rootEl.current)) {
+        setIsActivePopup(false);
+      }
+    };
+    document.body.addEventListener('click', handleClickOutside);
+    return () => document.body.removeEventListener('click', handleClickOutside);
+  }, []);
 
   return (
     <>
