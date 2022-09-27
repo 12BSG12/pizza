@@ -14,7 +14,8 @@ export const pizzaAPI = createApi({
   reducerPath: 'pizzaAPI',
   tagTypes: ['pizzaInfo', 'Cart', 'Auth'],
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:3001/',
+    baseUrl: 'https://bsg-pizza.herokuapp.com',
+    // baseUrl: 'http://localhost:3001/',
   }),
   endpoints: (builder) => ({
     getPizza: builder.query<pizzaApiType, pizzaArgType>({
