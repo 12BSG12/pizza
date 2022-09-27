@@ -34,8 +34,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "dev": "concurrently \"yarn run server\" \"yarn run start\"",
-    "server": "json-server -w server/db.json -p 3001"
+    "dev": "concurrently \"yarn run json-server\" \"yarn run start\"",
+    "server": "node server.js",
+    "json-server": "json-server -w server/db.json -p 3001"
   },
   "eslintConfig": {
     "extends": [
