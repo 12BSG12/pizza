@@ -7,6 +7,7 @@ const initialState: sortType = {
   sortTag: 'category',
   sortName: 'популярности (убыв.)',
   currentPage: 1,
+  searchText: '',
 }
 
 const sortReducer = createSlice({
@@ -32,8 +33,11 @@ const sortReducer = createSlice({
     setCurrentPage (state, action: PayloadAction<number>) {
       state.currentPage = action.payload
     },
+    setSearchText(state, action: PayloadAction<string>) {
+      state.searchText = action.payload
+    },
   }
 })
 
-export const { setSortTag, setCurrentPage, setIdAndTitle } = sortReducer.actions
+export const { setSortTag, setCurrentPage, setIdAndTitle, setSearchText } = sortReducer.actions
 export default sortReducer.reducer

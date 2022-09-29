@@ -1,6 +1,4 @@
 import { Home } from './pages/Home';
-import { Header } from './components/Header/Header';
-import './scss/app.scss';
 import { Route, Routes } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useAppDispatch } from './hooks/hooks';
@@ -8,6 +6,7 @@ import { useGetCartQuery } from './redux';
 import { setAllCount } from './redux/reducers/cart';
 import { Suspense, lazy } from 'react';
 import ThreeDots from './components/common/Preloader';
+import { Layout } from './components/Layouts/Layout';
 
 const Cart = lazy(() => import('./pages/Cart/Cart'));
 const PizzaInfo = lazy(() => import('./pages/PIzzaInfo/PizzaInfo'));
@@ -22,18 +21,15 @@ export const App = () => {
   }, [dispatch, data]);
 
   return (
-    <div className="wrapper">
-      <Header />
-      <div className="content">
-        <Suspense fallback={<ThreeDots />}>
-          <Routes>
-            <Route path="/" element={<Home cart={data} />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/pizza_info/:id" element={<PizzaInfo />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
-      </div>
-    </div>
+    <Suspense fallback={<ThreeDots />}>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home cart={data} />} />
+          <Route path="cart" element={<Cart />} />
+          <Route path="pizza_info/:id" element={<PizzaInfo />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
+    </Suspense>
   );
 };

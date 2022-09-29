@@ -1,6 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { pizzaAPI } from './reducers/pizzaAPI';
-import headerReducer from './reducers/header';
 import sortReducer from './reducers/sort';
 import cartReducer from './reducers/cart';
 import {
@@ -17,7 +16,6 @@ import storage from 'redux-persist/lib/storage';
 
 const rootReducer = combineReducers({
   [pizzaAPI.reducerPath]: pizzaAPI.reducer,
-  header: headerReducer,
   sort: sortReducer,
   cart: cartReducer,
 });

@@ -13,7 +13,7 @@ import { setCurrentPage } from '../redux/reducers/sort';
 
 export const Home: FC<{ cart: cartDataType[] }> = ({ cart }) => {
   const dispatch = useAppDispatch();
-  const { searchText } = useAppSelector((state) => state.header);
+  const { searchText } = useAppSelector((state) => state.sort);
   const { catID, title, sortTag, sortName, currentPage } = useAppSelector((state) => state.sort);
   
   const handleOnChangePage = (e: React.ChangeEvent<unknown>, value: number) => {

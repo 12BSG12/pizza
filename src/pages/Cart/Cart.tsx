@@ -7,7 +7,6 @@ import { useAuth } from '../../hooks/auth';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { useDelCartMutation, useGetCartQuery } from '../../redux';
 import { clearAllCount } from '../../redux/reducers/cart';
-import { setIsSwitched } from '../../redux/reducers/header';
 import '../../scss/app.scss';
 import { CartEmpty } from './CartEmpty';
 import { CartItem } from './CartItem';
@@ -143,10 +142,7 @@ const Cart = () => {
               </span>
             </div>
             <div className="cart__bottom-buttons">
-              <Link
-                to="/"
-                className="button button--outline button--add go-back-btn"
-                onClick={() => dispatch(setIsSwitched(true))}>
+              <Link to="/" className="button button--outline button--add go-back-btn">
                 <svg
                   width="8"
                   height="14"

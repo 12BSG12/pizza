@@ -1,8 +1,8 @@
 import '../../scss/app.scss';
 import logo from '../../assets/img/pizza-logo.svg';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import { setIsSwitched, setSearchText } from '../../redux/reducers/header';
-import { Link } from 'react-router-dom';
+import { setSearchText } from '../../redux/reducers/sort';
+import { Link, useLocation } from 'react-router-dom';
 import { useSetPizzaInfoMutation, useSetUserMutation } from '../../redux';
 import { useAuth } from '../../hooks/auth';
 import { Auth } from '../auth/Auth';
@@ -16,14 +16,14 @@ export const Header = () => {
   const [setPizzaInfo] = useSetPizzaInfoMutation();
   const [removeUser] = useSetUserMutation();
   const { isAuth } = useAuth();
+  const location = useLocation();
 
-  const { searchText, isSwitched } = useAppSelector((state) => state.header);
+  const { searchText } = useAppSelector((state) => state.sort);
   const { allCount, allSum } = useAppSelector((state) => state.cart);
   const [value, setValue] = useState(searchText);
 
   const handleDelPizzaInfo = async () => {
     await setPizzaInfo({ title: null, imageUrl: null, price: 0, info: null }).unwrap();
-    dispatch(setIsSwitched(true));
   };
 
   const [open, setOpenForm] = useState<boolean>(false);
@@ -55,7 +55,7 @@ export const Header = () => {
     }, 250),
     [dispatch],
   );
-  
+
   return (
     <>
       <div className="header">
@@ -69,7 +69,7 @@ export const Header = () => {
               </div>
             </div>
           </Link>
-          {isSwitched && (
+          {location.pathname !== '/cart' && (
             <>
               <div className="header__search">
                 <svg
@@ -118,10 +118,7 @@ export const Header = () => {
                 )}
               </div>
               <div className="header__cart">
-                <Link
-                  to="/cart"
-                  className="button button--cart"
-                  onClick={() => dispatch(setIsSwitched(false))}>
+                <Link to="/cart" className="button button--cart">
                   <span>{allSum} ₽</span>
                   <div className="button__delimiter"></div>
                   <svg
