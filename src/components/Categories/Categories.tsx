@@ -1,3 +1,4 @@
+import { useCallback  } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { ICategories } from '../../models/pizzaAPIType';
 import { useGetCategoriesQuery } from '../../redux';
@@ -7,23 +8,23 @@ import { Skeleton } from './Skeleton';
 
 export const Categories = () => {
   const dispatch = useAppDispatch();
-
+  
   const { catID } = useAppSelector((state) => state.sort);
-
+  
   const { data = [], isLoading } = useGetCategoriesQuery('');
-
-  const handleOnClick = (item: ICategories) => {
+  
+  const handleOnClick = useCallback((item: ICategories) => {
     dispatch(setIdAndTitle({ catID: item.id, title: item.catName }));
     dispatch(setCurrentPage(1))
-  };
-
-  return (
+  }, []);
+  
+  return (  
     <div className="categories">
       {isLoading ? (
         <Skeleton />
       ) : (
         <ul>
-          {data.map((item, index) => (
+          {data.map((item) => (
             <li
               className={item.id === catID ? 'active' : ''}
               key={item.id}

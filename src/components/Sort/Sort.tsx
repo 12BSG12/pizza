@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { ISort } from '../../models/pizzaAPIType';
 import { useGetSortQuery } from '../../redux';
@@ -18,9 +18,9 @@ export const Sort = () => {
 
   const [isActivePopup, setIsActivePopup] = useState<boolean>(false);
 
-  const handlerOnClick = (item: ISort) => {
+  const handlerOnClick = useCallback((item: ISort) => {
     dispatch(setSortTag({ sortName: item.sortName }));
-  };
+  }, []);
 
   const rootEl = useRef<HTMLDivElement>(null);
 
@@ -76,3 +76,4 @@ export const Sort = () => {
     </>
   );
 };
+
